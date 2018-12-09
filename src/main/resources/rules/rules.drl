@@ -15,13 +15,46 @@ declare enum Answers
     STALKER("It's my stalker"),
     THERAPIST("It's my terapist");
 
+
     value: String;
 end
 
 declare enum QuestionSet
     WHAT_KIND_OF_RELATION("What kind of preexisting relationship do you have with this person?"),
     WHO_IS_THIS("Who is this person?"),
-    ARE_YOU_CRAZY("Are you crazy?");
+    ARE_YOU_CRAZY("Are you crazy?"),
+    WHERE_DO_YOU_LIVE("Do you live in either New York or San Francisco"),
+    GENERATE_PUBLICITY("Are you just trying to generate publicity and dispel certain rumors?"),
+    RESTRAINING_ORDER_INVOLVED("Is there a restraining order involved?"),
+    KIDS_BACK("Is this just an attempt to get your kids back?"),
+    THE_ONLY_ONE_WHO_LOVES_YOU("When are you gonna realize that I'm the only one who's ever gonna love you?"),
+    HEALTH_RISK("Is your health at any serious risk?"),
+    JOB_SUCKS("Does your job sucks?"),
+    LONELY(How lonely are you?),
+    GETTING_HIGH("Do you wanna get high?"),
+    LIKE_DRAMA("Do you like drama?"),
+    SEX_WITH_OTHER_PEOPLE("Are you done having sex with other people?"),
+    HAVING_CHOICE("Do you really have choice in the matter?"),
+    ARE_YOU_RELATED("Are you related?"),
+    WHERE_DO_YOU_TEACH("Where do you teach?"),
+    SEX_WITH_MINOR("Whoa. You're talking about having sex with a minor, right?"),
+    BY_BLOOD("By blood?"),
+    ARE_THE_PARENTS_STILL_MARIED("Are the parents still marrid?"),
+    ARE_YOU_WOODY_ALLEN("Are you Woody Allen?"),
+    DID_YOU_GROW_UP_TOGETHER("Did you grow up together, like from childhood?"),
+    REALLY_IN_LOVE_OR_DESPERETA("Are you really in love or just desperate?"),
+    DO_YOU_LIVE_IN_A_SPARSELY("Do you live in sparsely populated are? Or the South?");
+
+
+
+
+
+
+
+
+
+
+
 
     value: String
 end
