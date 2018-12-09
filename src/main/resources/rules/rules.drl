@@ -30,7 +30,7 @@ declare enum QuestionSet
     THE_ONLY_ONE_WHO_LOVES_YOU("When are you gonna realize that I'm the only one who's ever gonna love you?"),
     HEALTH_RISK("Is your health at any serious risk?"),
     JOB_SUCKS("Does your job sucks?"),
-    LONELY(How lonely are you?),
+    LONELY("How lonely are you?"),
     GETTING_HIGH("Do you wanna get high?"),
     LIKE_DRAMA("Do you like drama?"),
     SEX_WITH_OTHER_PEOPLE("Are you done having sex with other people?"),
