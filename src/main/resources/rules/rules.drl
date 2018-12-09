@@ -1,0 +1,91 @@
+package com.drools.example
+import javax.swing.JOptionPane
+import javax.swing.JFrame
+import javax.swing.Icon
+import org.kie.api.runtime.*
+
+global JFrame frame
+
+declare enum Answers
+    YES("Yes"),
+    NO("no"),
+    PERSONAL("personal"),
+    PROFESSIONAL("proffessional"),
+    COSTAR("It's my costar"),
+    STALKER("It's my stalker"),
+    THERAPIST("It's my terapist");
+
+    value: String;
+end
+
+declare enum QuestionSet
+    WHAT_KIND_OF_RELATION("What kind of preexisting relationship do you have with this person?"),
+    WHO_IS_THIS("Who is this person?"),
+    ARE_YOU_CRAZY("Are you crazy?");
+
+    value: String
+end
+
+declare Question
+    question: QuestionSet
+    answer: String
+end
+
+
+function void askUser(QuestionSet question, KieRuntime krt){
+    String[] options = {Answers.YES.getValue(), Answers.NO.getValue()};
+    int n = JOptionPane.showOptionDialog(
+                (JFrame) krt.getGlobal("frame"),
+                question.getValue(),
+                "",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                (Icon) null,
+                options,
+                options[0]
+    		);
+    Question q = new Question(question, options[n]);
+    krt.insert(q);
+}
+
+function void askUserWithOtherOptions(QuestionSet question, KieRuntime krt, Answers[] answers){
+    String[] options = new String[answers.length];
+    for(int i = 0; i < options.length; i++) {
+        options[i] = answers[i].getValue();
+    }
+    int n = JOptionPane.showOptionDialog(
+                (JFrame) krt.getGlobal("frame"),
+                question.getValue(),
+                "",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                (Icon) null,
+                options,
+                options[0]
+    		);
+    Question q;
+    if(n >= 0) {
+        q = new Question(question, options[n]);
+    } else {
+        q = new Question(question, null);
+    }
+    System.out.println(q);
+    krt.insert(q);
+}
+
+
+rule init0
+    when
+    then
+        askUserWithOtherOptions(QuestionSet.WHAT_KIND_OF_RELATION, kcontext.getKieRuntime(), new Answers[]{
+        	Answers.PROFESSIONAL, Answers.PERSONAL
+        });
+end
+
+rule "1"
+    when
+       Question: Question(question == QuestionSet.WHAT_KIND_OF_RELATION && answer == Answers.PROFESSIONAL.getValue())
+    then
+    askUserWithOtherOptions(QuestionSet.WHO_IS_THIS, kcontext.getKieRuntime(), new Answers[]{
+    	Answers.COSTAR, Answers.STALKER, Answers.THERAPIST});
+end
