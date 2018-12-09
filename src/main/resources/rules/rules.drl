@@ -9,11 +9,44 @@ global JFrame frame
 declare enum Answers
     YES("Yes"),
     NO("no"),
+    MAYBE_A_LITTLE("maybe a little"),
+    I_DONT_THINK_SO("I don't think so"),
+    NEVER("never"),
+    TODAYS("todays"),
+    A_LITTLE("a little"),
+    NOT_AT_ALL("not at all"),
+    COLLEGE("college"),
+    ANYTHING_BELOW_COLLEGE("Anything bellow college"),
+    NO_OF_COURSE("No, of course not"),
+    YEAH("yeah"),
+    GOD_DEPERATE("God, I am so desperate"),
+    NO_ITS_LOVE("No, it's realy love, I'm sure"),
     PERSONAL("personal"),
     PROFESSIONAL("proffessional"),
     COSTAR("It's my costar"),
     STALKER("It's my stalker"),
-    THERAPIST("It's my terapist");
+    THERAPIST("It's my terapist"),
+    SOCIAL_WORKER("It's my social worker"),
+    LANDLORD("It's my landlord"),
+    PHYSICIAN("It's my physician"),
+    BOSS_COWORKER("It's my boss/coworker"),
+    PROFESSOR("It's my professor"),
+    TEACHER("It's my teacher"),
+    MISSED_CONNECTION("It's my missed connection"),
+    BEST_FRIEND_SIBLING("It's my best friend's sibling"),
+    DEALER("It's my dealer"),
+    ROOMMATE("It's my roommate"),
+    SOULMATE("It's my soulmate"),
+    CELLMATE("It's my cellmate"),
+    DUNGEON_MASTER("It's my dungeon master"),
+    HIGH_SCHOOL_CRUSH("It's my high school crush"),
+    CHILD("It's my step or adopted sibling or child"),
+    BROTHER_WIFE_COUSIN("It's my brother's wife's cousin, if you can believe it"),
+    BROTHER_SISTER("It's my brother, sister, first cousin, aunt, uncle, parent, grandparent or child"),
+    SECOND_COUSIN("It's my second cousin, half_cousin or more distant");
+
+
+
 
 
     value: String;
