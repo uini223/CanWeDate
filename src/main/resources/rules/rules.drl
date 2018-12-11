@@ -89,7 +89,24 @@ declare enum QuestionSet
 end
 
 declare enum Messages
-    DUPA("Dupa");
+    DO_WHATEVER_IT_TAKES("Do whatever it takes"),
+    PROBABLY_BETTER_NOT("Probably better not"),
+    HI_ROBERT_PATTINSON("Hi, Robert Patinson"),
+    NOT_ADVISED("Not advised, bt we'll allow it if you make a sex tape"),
+    HANDS("Hands"),
+    BAD_LIAR("You're bad liar"),
+    NUT("Nut"),
+    BONE("Bone"),
+    AWESOME_LEAVING("Awsome! Leaving the house ad putting on clothes are two of the worst parts of dating, so this is actually one of the better decisons you'll ever make! Go for it!"),
+    WELL_PRETTY_OBVIOUS("Well, it's pretty obvious , but go ahead and give it a shot."),
+    ABSOLUTELY?_NOT("Absolutely not!!!!"),
+    I_GUESS_ITS_OK("I guess it's ok but you should probably keep it on the downlow."),
+    YES_FOR_THE_GOD("Yes, for the love of the God, someone please have sex with the dungeon master!"),
+    YOU_MISSED("You've missed the point of this chart. And yo disgust me."),
+    THOUGHT_CRIME("Thought-crime! Our agent have been sent to your location. Resistance is useless."),
+    HANG_IN_THERE("Hang in there, pal. You'll meet someone else."),
+    MAKE_IT_HAPPEN_CAPTAIN("Make it happen, Captain.");
+
 
     value: String;
 end
@@ -146,7 +163,663 @@ rule "1"
     when
        Question: Question(question == QuestionSet.WHAT_KIND_OF_RELATION && answer == Answers.PROFESSIONAL.getValue())
     then
-//    showMessage(Messages.DUPA.getValue(), kcontext.getKieRuntime());
+//    showMessage(Messages., kcontext.getKieRuntime());
     askUserWithOtherOptions(QuestionSet.WHO_IS_THIS, kcontext.getKieRuntime(), new Answers[]{
     	Answers.COSTAR, Answers.STALKER, Answers.THERAPIST});
+end
+
+rule "WHAT_KIND_OF_RELATION/PERSONAL"
+    when
+        Question: Question(question == QuestionSet.WHAT_KIND_OF_RELATION && answer == Answers.PERSONAL.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.ARE_YOU_RELATED, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHAT_KIND_OF_RELATION/PROFESSIONAL"
+    when
+        Question: Question(question == QuestionSet.WHAT_KIND_OF_RELATION && answer == Answers.PROFESSIONAL.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.WHO_IS_THIS, kcontext.getKieRuntime(), new Answers[]{
+        Answers.COSTAR, Answers.STALKER, Answers.THERAPIST, Answers.SOCIAL_WORKER, Answers.LANDLORD, Answers.PHYSICIAN, Answers.BOSS_COWORKER, Answers.PROFESSOR, Answers.TEACHER, Answers.STUDENT});
+end
+
+rule "ARE_YOU_RELATED/YES"
+    when
+        Question: Question(question == QuestionSet.ARE_YOU_RELATED && answer == Answers.YES.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.BY_BLOOD, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "ARE_YOU_RELATED/NO"
+    when
+        Question: Question(question == QuestionSet.ARE_YOU_RELATED && answer == Answers.NO.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.WHO_IS_THIS, kcontext.getKieRuntime(), new Answers[]{
+        Answers.MISSED_CONNECTION, Answers.BEST_FRIEND_SIBLING, Answers.DEALER, Answers.ROOMMATE, Answers.SOULMATE, Answers.CELLMATE, Answers.DUNGEON_MASTER, Answers.HIGH_SCHOOL_CRUSH});
+end
+
+rule "WHO_IS_THIS/COSTAR"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.COSTAR.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.GENERATE_PUBLICITY, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHO_IS_THIS/STALKER"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.STALKER.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.RESTRAINING_ORDER_INVOLVED, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHO_IS_THIS/THERAPIST"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.THERAPIST.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.ARE_YOU_CRAZY, kcontext.getKieRuntime(), new Answers[]{
+        Answers.I_DONT_THINK_SO, Answers.MAYBE_A_LITTLE});
+end
+
+rule "WHO_IS_THIS/SOCIAL_WORKER"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.SOCIAL_WORKER.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.KIDS_BACK, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHO_IS_THIS/LANDLORD"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.LANDLORD.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.WHERE_DO_YOU_LIVE, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHO_IS_THIS/PHYSICIAN"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.PHYSICIAN.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.HEALTH_RISK, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHO_IS_THIS/BOSS_COWORKER"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.BOSS_COWORKER.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.JOB_SUCKS, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHO_IS_THIS/PROFESSOR"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.PROFESSOR.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "WHO_IS_THIS/TEACHER"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.TEACHER.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "WHO_IS_THIS/STUDENT"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.STUDENT.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.WHERE_DO_YOU_TEACH, kcontext.getKieRuntime(), new Answers[]{
+        Answers.COLLEGE, Answers.ANYTHING_BELOW_COLLEGE});
+end
+
+rule "BY_BLOOD/YES"
+    when
+        Question: Question(question == QuestionSet.BY_BLOOD && answer == Answers.YES.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.WHO_IS_THIS, kcontext.getKieRuntime(), new Answers[]{
+        Answers.BROTHER_SISTER, Answers.SECOND_COUSIN});
+end
+
+rule "BY_BLOOD/NO"
+    when
+        Question: Question(question == QuestionSet.BY_BLOOD && answer == Answers.NO.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.WHO_IS_THIS, kcontext.getKieRuntime(), new Answers[]{
+        Answers.BROTHER_WIFE_COUSIN, Answers.CHILD});
+end
+
+rule "WHO_IS_THIS/MISSED_CONNECTION"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.MISSED_CONNECTION.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.LONELY, kcontext.getKieRuntime(), new Answers[]{
+        Answers.A_LITTLE, Answers.NOT_AT_ALL});
+end
+
+rule "WHO_IS_THIS/BEST_FRIEND_SIBLING"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.BEST_FRIEND_SIBLING.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.ARE_YOU_CRAZY, kcontext.getKieRuntime(), new Answers[]{
+        Answers.I_DONT_THINK_SO, Answers.A_LITTLE});
+end
+
+rule "WHO_IS_THIS/DEALER"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.DEALER.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.GETTING_HIGH, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHO_IS_THIS/ROOMMATE"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.ROOMMATE.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.LIKE_DRAMA, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHO_IS_THIS/SOULMATE"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.SOULMATE.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.SEX_WITH_OTHER_PEOPLE, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHO_IS_THIS/CELLMATE"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.CELLMATE.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.HAVING_CHOICE, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHO_IS_THIS/DUNGEON_MASTER"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.DUNGEON_MASTER.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "WHO_IS_THIS/HIGH_SCHOOL_CRUSH"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.HIGH_SCHOOL_CRUSH.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "GENERATE_PUBLICITY/YES"
+    when
+        Question: Question(question == QuestionSet.GENERATE_PUBLICITY && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "GENERATE_PUBLICITY/NO"
+    when
+        Question: Question(question == QuestionSet.GENERATE_PUBLICITY && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "RESTRAINING_ORDER_INVOLVED/YES"
+    when
+        Question: Question(question == QuestionSet.RESTRAINING_ORDER_INVOLVED && answer == Answers.YES.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.THE_ONLY_ONE_WHO_LOVES_YOU, kcontext.getKieRuntime(), new Answers[]{
+        Answers.NEVER, Answers.TODAYS});
+end
+
+rule "RESTRAINING_ORDER_INVOLVED/NO"
+    when
+        Question: Question(question == QuestionSet.RESTRAINING_ORDER_INVOLVED && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "ARE_YOU_CRAZY/I_DONT_THINK_SO"
+    when
+        Question: Question(question == QuestionSet.ARE_YOU_CRAZY && answer == Answers.I_DONT_THINK_SO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "ARE_YOU_CRAZY/MAYBE_A_LITTLE"
+    when
+        Question: Question(question == QuestionSet.ARE_YOU_CRAZY && answer == Answers.MAYBE_A_LITTLE.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+rule "KIDS_BACK/YES"
+    when
+        Question: Question(question == QuestionSet.KIDS_BACK && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "KIDS_BACK/NO"
+    when
+        Question: Question(question == QuestionSet.KIDS_BACK && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "WHERE_DO_YOU_LIVE/YES"
+    when
+        Question: Question(question == QuestionSet.WHERE_DO_YOU_LIVE && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "WHERE_DO_YOU_LIVE/NO"
+    when
+        Question: Question(question == QuestionSet.WHERE_DO_YOU_LIVE && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "HEALTH_RISK/YES"
+    when
+        Question: Question(question == QuestionSet.HEALTH_RISK && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "HEALTH_RISK/NO"
+    when
+        Question: Question(question == QuestionSet.HEALTH_RISK && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "JOB_SUCKS/YES"
+    when
+        Question: Question(question == QuestionSet.JOB_SUCKS && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "JOB_SUCKS/NO"
+    when
+        Question: Question(question == QuestionSet.JOB_SUCKS && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "WHERE_DO_YOU_TEACH/COLLEGE"
+    when
+        Question: Question(question == QuestionSet.WHERE_DO_YOU_TEACH && answer == Answers.COLLEGE.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.JOB_SUCKS, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "WHERE_DO_YOU_TEACH/ANYTHING_BELOW_COLLEGE"
+    when
+        Question: Question(question == QuestionSet.WHERE_DO_YOU_TEACH && answer == Answers.ANYTHING_BELOW_COLLEGE.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.SEX_WITH_MINOR, kcontext.getKieRuntime(), new Answers[]{
+        Answers.NO_OF_COURSE, Answers.YEAH});
+end
+
+rule "WHO_IS_THIS/BROTHER_SISTER"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.BROTHER_SISTER.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "WHO_IS_THIS/SECOND_COUSIN"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.SECOND_COUSIN.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.REALLY_IN_LOVE_OR_DESPERETA, kcontext.getKieRuntime(), new Answers[]{
+        Answers.GOD_DEPERATE, Answers.NO_ITS_LOVE});
+end
+
+rule "WHO_IS_THIS/BROTHER_WIFE_COUSIN"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.BROTHER_WIFE_COUSIN.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "WHO_IS_THIS/CHILD"
+    when
+        Question: Question(question == QuestionSet.WHO_IS_THIS && answer == Answers.CHILD.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.ARE_THE_PARENTS_STILL_MARIED, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "LONELY/A_LITTLE"
+    when
+        Question: Question(question == QuestionSet.LONELY && answer == Answers.A_LITTLE.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "LONELY/NOT_AT_ALL"
+    when
+        Question: Question(question == QuestionSet.LONELY && answer == Answers.NOT_AT_ALL.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "ARE_YOU_CRAZY/I_DONT_THINK_SO"
+    when
+        Question: Question(question == QuestionSet.ARE_YOU_CRAZY && answer == Answers.I_DONT_THINK_SO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "ARE_YOU_CRAZY/A_LITTLE"
+    when
+        Question: Question(question == QuestionSet.ARE_YOU_CRAZY && answer == Answers.A_LITTLE.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "GETTING_HIGH/YES"
+    when
+        Question: Question(question == QuestionSet.GETTING_HIGH && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "GETTING_HIGH/NO"
+    when
+        Question: Question(question == QuestionSet.GETTING_HIGH && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "LIKE_DRAMA/YES"
+    when
+        Question: Question(question == QuestionSet.LIKE_DRAMA && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "LIKE_DRAMA/NO"
+    when
+        Question: Question(question == QuestionSet.LIKE_DRAMA && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "SEX_WITH_OTHER_PEOPLE/YES"
+    when
+        Question: Question(question == QuestionSet.SEX_WITH_OTHER_PEOPLE && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "SEX_WITH_OTHER_PEOPLE/NO"
+    when
+        Question: Question(question == QuestionSet.SEX_WITH_OTHER_PEOPLE && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "HAVING_CHOICE/YES"
+    when
+        Question: Question(question == QuestionSet.HAVING_CHOICE && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "HAVING_CHOICE/NO"
+    when
+        Question: Question(question == QuestionSet.HAVING_CHOICE && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "THE_ONLY_ONE_WHO_LOVES_YOU/NEVER"
+    when
+        Question: Question(question == QuestionSet.THE_ONLY_ONE_WHO_LOVES_YOU && answer == Answers.NEVER.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "THE_ONLY_ONE_WHO_LOVES_YOU/TODAYS"
+    when
+        Question: Question(question == QuestionSet.THE_ONLY_ONE_WHO_LOVES_YOU && answer == Answers.TODAYS.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "JOB_SUCKS/YES"
+    when
+        Question: Question(question == QuestionSet.JOB_SUCKS && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "JOB_SUCKS/NO"
+    when
+        Question: Question(question == QuestionSet.JOB_SUCKS && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "SEX_WITH_MINOR/NO_OF_COURSE"
+    when
+        Question: Question(question == QuestionSet.SEX_WITH_MINOR && answer == Answers.NO_OF_COURSE.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "SEX_WITH_MINOR/YEAH"
+    when
+        Question: Question(question == QuestionSet.SEX_WITH_MINOR && answer == Answers.YEAH.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "REALLY_IN_LOVE_OR_DESPERETA/GOD_DEPERATE"
+    when
+        Question: Question(question == QuestionSet.REALLY_IN_LOVE_OR_DESPERETA && answer == Answers.GOD_DEPERATE.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "REALLY_IN_LOVE_OR_DESPERETA/NO_ITS_LOVE"
+    when
+        Question: Question(question == QuestionSet.REALLY_IN_LOVE_OR_DESPERETA && answer == Answers.NO_ITS_LOVE.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.DO_YOU_LIVE_IN_A_SPARSELY, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "ARE_THE_PARENTS_STILL_MARIED/YES"
+    when
+        Question: Question(question == QuestionSet.ARE_THE_PARENTS_STILL_MARIED && answer == Answers.YES.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.ARE_YOU_WOODY_ALLEN, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "ARE_THE_PARENTS_STILL_MARIED/NO"
+    when
+        Question: Question(question == QuestionSet.ARE_THE_PARENTS_STILL_MARIED && answer == Answers.NO.getValue())
+    then
+        askUserWithOtherOptions(QuestionSet.DID_YOU_GROW_UP_TOGETHER, kcontext.getKieRuntime(), new Answers[]{
+        Answers.YES, Answers.NO});
+end
+
+rule "DO_YOU_LIVE_IN_A_SPARSELY/YES"
+    when
+        Question: Question(question == QuestionSet.DO_YOU_LIVE_IN_A_SPARSELY && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "DO_YOU_LIVE_IN_A_SPARSELY/NO"
+    when
+        Question: Question(question == QuestionSet.DO_YOU_LIVE_IN_A_SPARSELY && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "ARE_YOU_WOODY_ALLEN/YES"
+    when
+        Question: Question(question == QuestionSet.ARE_YOU_WOODY_ALLEN && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "ARE_YOU_WOODY_ALLEN/NO"
+    when
+        Question: Question(question == QuestionSet.ARE_YOU_WOODY_ALLEN && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "DID_YOU_GROW_UP_TOGETHER/YES"
+    when
+        Question: Question(question == QuestionSet.DID_YOU_GROW_UP_TOGETHER && answer == Answers.YES.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
+end
+
+rule "DID_YOU_GROW_UP_TOGETHER/NO"
+    when
+        Question: Question(question == QuestionSet.DID_YOU_GROW_UP_TOGETHER && answer == Answers.NO.getValue())
+    then
+        showMessage(Messages., kcontext.getKieRuntime());
+
+//        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
+//        fisnish});
 end
