@@ -11,7 +11,7 @@ declare enum Answers
     NO("No"),
     MAYBE_A_LITTLE("Maybe a little"),
     I_DONT_THINK_SO("I don't think so"),
-    NEVER("Mever"),
+    NEVER("Never"),
     TODAYS("Todays"),
     A_LITTLE("A little"),
     NOT_AT_ALL("Not at all"),
@@ -94,17 +94,17 @@ declare enum Messages
     DO_WHATEVER_IT_TAKES("Do whatever it takes"),
     PROBABLY_BETTER_NOT("Probably better not"),
     HI_ROBERT_PATTINSON("Hi, Robert Patinson"),
-    NOT_ADVISED("Not advised, bt we'll allow it if you make a sex tape"),
+    NOT_ADVISED("Not advised, but we'll allow it if you make a sex tape"),
     HANDS("Hands"),
     BAD_LIAR("You're bad liar"),
-    NUT("Nut"),
+    NUT("Screw"),
     BONE("Bone"),
-    AWESOME_LEAVING("Awsome! Leaving the house ad putting on clothes are two of the worst parts of dating, so this is actually one of the better decisons you'll ever make! Go for it!"),
+    AWESOME_LEAVING("Awsome! Leaving the house and putting on clothes are two of the worst parts of dating, so this is actually one of the better decisons you'll ever make! Go for it!"),
     WELL_PRETTY_OBVIOUS("Well, it's pretty obvious , but go ahead and give it a shot."),
     ABSOLUTELY_NOT("Absolutely not!!!!"),
     I_GUESS_ITS_OK("I guess it's ok but you should probably keep it on the downlow."),
     YES_FOR_THE_GOD("Yes, for the love of the God, someone please have sex with the dungeon master!"),
-    YOU_MISSED("You've missed the point of this chart. And yo disgust me."),
+    YOU_MISSED("You've missed the point of this chart. And you disgust me."),
     THOUGHT_CRIME("Thought-crime! Our agent have been sent to your location. Resistance is useless."),
     HANG_IN_THERE("Hang in there, pal. You'll meet someone else."),
     MAKE_IT_HAPPEN_CAPTAIN("Make it happen, Captain.");
@@ -115,7 +115,7 @@ end
 
 declare Question
     question: QuestionSet
-    answer: String
+    answer: Answers
 end
 
 
@@ -141,7 +141,7 @@ function void askUserWithOtherOptions(QuestionSet question, KieRuntime krt, Answ
     		);
     Question q;
     if(n >= 0) {
-        q = new Question(question, options[n]);
+        q = new Question(question, answers[n]);
     } else {
         q = new Question(question, null);
     }
@@ -149,8 +149,8 @@ function void askUserWithOtherOptions(QuestionSet question, KieRuntime krt, Answ
     krt.insert(q);
 }
 
-function void showMessage(String message, KieRuntime krt){
-    JOptionPane.showMessageDialog((JFrame) krt.getGlobal("frame"), message);
+function void showMessage(Messages message, KieRuntime krt){
+    JOptionPane.showMessageDialog((JFrame) krt.getGlobal("frame"), message.getValue());
 }
 
 rule init0
@@ -404,7 +404,7 @@ end
 
 rule "ARE_YOU_CRAZY_B/I_DONT_THINK_SO"
     when
-        Question: Question(question == QuestionSet.ARE_YOU_CRAZY && answer == Answers.I_DONT_THINK_SO)
+        Question: Question(question == QuestionSet.ARE_YOU_CRAZY_B && answer == Answers.I_DONT_THINK_SO)
     then
         showMessage(Messages.HANDS, kcontext.getKieRuntime());
 //        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
@@ -413,7 +413,7 @@ end
 
 rule "ARE_YOU_CRAZY_B/MAYBE_A_LITTLE"
     when
-        Question: Question(question == QuestionSet.ARE_YOU_CRAZY && answer == Answers.MAYBE_A_LITTLE)
+        Question: Question(question == QuestionSet.ARE_YOU_CRAZY_B && answer == Answers.MAYBE_A_LITTLE)
     then
         showMessage(Messages.PROBABLY_BETTER_NOT, kcontext.getKieRuntime());
 
@@ -616,7 +616,7 @@ rule "LIKE_DRAMA/YES"
     when
         Question: Question(question == QuestionSet.LIKE_DRAMA && answer == Answers.YES)
     then
-        showMessage(Messages.PROBABLY_BETTER_NOT, kcontext.getKieRuntime());
+        showMessage(Messages.AWESOME_LEAVING, kcontext.getKieRuntime());
 
 //        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
 //        fisnish});
@@ -626,7 +626,7 @@ rule "LIKE_DRAMA/NO"
     when
         Question: Question(question == QuestionSet.LIKE_DRAMA && answer == Answers.NO)
     then
-        showMessage(Messages.AWESOME_LEAVING, kcontext.getKieRuntime());
+        showMessage(Messages.PROBABLY_BETTER_NOT, kcontext.getKieRuntime());
 
 //        askUserWithOtherOptions(QuestionSet.finish, kcontext.getKieRuntime(), new Answers[]{
 //        fisnish});
