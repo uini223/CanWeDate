@@ -1,0 +1,135 @@
+package com.drools.example
+
+declare enum Answers
+    YES("Yes"),
+    NO("No"),
+    MAYBE_A_LITTLE("Maybe a little"),
+    I_DONT_THINK_SO("I don't think so"),
+    NEVER("Never"),
+    TODAYS("Todays"),
+    A_LITTLE("A little"),
+    NOT_AT_ALL("Not at all"),
+    COLLEGE("College"),
+    ANYTHING_BELOW_COLLEGE("Anything bellow college"),
+    NO_OF_COURSE("No, of course not"),
+    YEAH("Yeah"),
+    GOD_DEPERATE("God, I am so desperate"),
+    NO_ITS_LOVE("No, it's realy love, I'm sure"),
+    PERSONAL("Personal"),
+    PROFESSIONAL("Proffessional"),
+    COSTAR("It's my costar"),
+    STALKER("It's my stalker"),
+    THERAPIST("It's my terapist"),
+    SOCIAL_WORKER("It's my social worker"),
+    LANDLORD("It's my landlord"),
+    PHYSICIAN("It's my physician"),
+    BOSS_COWORKER("It's my boss/coworker"),
+    PROFESSOR("It's my professor"),
+    TEACHER("It's my teacher"),
+    STUDENT("It's my student"),
+    MISSED_CONNECTION("It's my missed connection"),
+    BEST_FRIEND_SIBLING("It's my best friend's sibling"),
+    DEALER("It's my dealer"),
+    ROOMMATE("It's my roommate"),
+    SOULMATE("It's my soulmate"),
+    CELLMATE("It's my cellmate"),
+    DUNGEON_MASTER("It's my dungeon master"),
+    HIGH_SCHOOL_CRUSH("It's my high school crush"),
+    CHILD("It's my step or adopted sibling or child"),
+    BROTHER_WIFE_COUSIN("It's my brother's wife's cousin, if you can believe it"),
+    BROTHER_SISTER("It's my brother, sister, first cousin, aunt, uncle, parent, grandparent or child"),
+    SECOND_COUSIN("It's my second cousin, half_cousin or more distant");
+
+    value: String;
+end
+
+declare enum QuestionSet
+    WHAT_KIND_OF_RELATION("What kind of preexisting relationship do you have with this person?"),
+    WHO_IS_THIS("Who is this person?"),
+    ARE_YOU_CRAZY("Are you crazy?"),
+    ARE_YOU_CRAZY_B("ARE YOU CRAZY?"),
+    WHERE_DO_YOU_LIVE("Do you live in either New York or San Francisco"),
+    GENERATE_PUBLICITY("Are you just trying to generate publicity and dispel certain rumors?"),
+    RESTRAINING_ORDER_INVOLVED("Is there a restraining order involved?"),
+    KIDS_BACK("Is this just an attempt to get your kids back?"),
+    THE_ONLY_ONE_WHO_LOVES_YOU("When are you gonna realize that I'm the only one who's ever gonna love you?"),
+    HEALTH_RISK("Is your health at any serious risk?"),
+    JOB_SUCKS("Does your job sucks?"),
+    LONELY("How lonely are you?"),
+    GETTING_HIGH("Do you wanna get high?"),
+    LIKE_DRAMA("Do you like drama?"),
+    SEX_WITH_OTHER_PEOPLE("Are you done having sex with other people?"),
+    HAVING_CHOICE("Do you really have choice in the matter?"),
+    ARE_YOU_RELATED("Are you related?"),
+    WHERE_DO_YOU_TEACH("Where do you teach?"),
+    SEX_WITH_MINOR("Whoa. You're talking about having sex with a minor, right?"),
+    BY_BLOOD("By blood?"),
+    ARE_THE_PARENTS_STILL_MARIED("Are the parents still marrid?"),
+    ARE_YOU_WOODY_ALLEN("Are you Woody Allen?"),
+    DID_YOU_GROW_UP_TOGETHER("Did you grow up together, like from childhood?"),
+    REALLY_IN_LOVE_OR_DESPERETA("Are you really in love or just desperate?"),
+    DO_YOU_LIVE_IN_A_SPARSELY("Do you live in sparsely populated are? Or the South?");
+
+    value: String
+end
+
+declare enum Messages
+    DO_WHATEVER_IT_TAKES("Do whatever it takes"),
+    PROBABLY_BETTER_NOT("Probably better not"),
+    HI_ROBERT_PATTINSON("Hi, Robert Patinson"),
+    NOT_ADVISED("Not advised, but we'll allow it if you make a sex tape"),
+    HANDS("Hands"),
+    BAD_LIAR("You're bad liar"),
+    NUT("Screw"),
+    BONE("Bone"),
+    AWESOME_LEAVING("Awsome! Leaving the house and putting on clothes are two of the worst parts of dating, so this is actually one of the better decisons you'll ever make! Go for it!"),
+    WELL_PRETTY_OBVIOUS("Well, it's pretty obvious , but go ahead and give it a shot."),
+    ABSOLUTELY_NOT("Absolutely not!!!!"),
+    I_GUESS_ITS_OK("I guess it's ok but you should probably keep it on the downlow."),
+    YES_FOR_THE_GOD("Yes, for the love of the God, someone please have sex with the dungeon master!"),
+    YOU_MISSED("You've missed the point of this chart. And you disgust me."),
+    THOUGHT_CRIME("Thought-crime! Our agent have been sent to your location. Resistance is useless."),
+    HANG_IN_THERE("Hang in there, pal. You'll meet someone else."),
+    MAKE_IT_HAPPEN_CAPTAIN("Make it happen, Captain.");
+
+    value: String;
+end
+
+declare Question
+    question: QuestionSet
+    answer: Answers
+end
+
+
+function void askUser(QuestionSet question, KieRuntime krt){
+    Answers[] answers = {Answers.YES, Answers.NO};
+    askUserWithOtherOptions(question, krt, answers);
+}
+
+function void askUserWithOtherOptions(QuestionSet question, KieRuntime krt, Answers[] answers){
+    String[] options = new String[answers.length];
+    for(int i = 0; i < options.length; i++) {
+        options[i] = answers[i].getValue();
+    }
+    int n = JOptionPane.showOptionDialog(
+                (JFrame) krt.getGlobal("frame"),
+                question.getValue(),
+                "",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                (Icon) null,
+                options,
+                options[0]
+    		);
+    Question q;
+    if(n >= 0) {
+        q = new Question(question, answers[n]);
+    } else {
+        q = new Question(question, null);
+    }
+    krt.insert(q);
+}
+
+function void showMessage(Messages message, KieRuntime krt){
+    JOptionPane.showMessageDialog((JFrame) krt.getGlobal("frame"), message.getValue());
+}
