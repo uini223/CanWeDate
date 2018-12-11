@@ -11,20 +11,20 @@ import org.kie.api.runtime.KieSession;
 import javax.swing.*;
 import java.io.IOException;
 
-public class HelloWorldTest {
+public class CanWeDate {
 
 	private static JFrame frame;
 
 	public static void main(String[] args) throws DroolsParserException, IOException {
-		HelloWorldTest helloWorldTest = new HelloWorldTest();
-		helloWorldTest.executeHelloWorldRules();
+		CanWeDate canWeDate = new CanWeDate();
+		canWeDate.executeHelloWorldRules();
 	}
 
 	public void executeHelloWorldRules() throws IOException, DroolsParserException {
 		KieServices ks = KieServices.Factory.get();
 		BasicConfigurator.configure();
 
-		Logger.getLogger(HelloWorldTest.class).setLevel(Level.OFF);
+		Logger.getLogger(CanWeDate.class).setLevel(Level.OFF);
 		KieContainer kContainer = ks.getKieClasspathContainer();
 		KieSession session = kContainer.newKieSession("ksession-rules");
 
